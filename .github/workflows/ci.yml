@@ -2,19 +2,19 @@ name: CI - Marmitaria
 
 on:
   push:
-    branch:
+    branches:
       - master
-  
-  jobs:
-    teste:
-      runs-on: ubuntu-latest
 
-      steps:
-        - name: Baixar código
-          uses: actions/checkout@v4
-        
-        - name: Instalar dependencias
-          run: npm ci 
-        
-        - name: Executar testes
-          run: npm test
+jobs:
+  teste:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar código
+        uses: actions/checkout@v4
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Executar testes
+        run: npm test
