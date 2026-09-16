@@ -18,3 +18,6 @@ jobs:
 
       - name: Executar testes
         run: npm test
+      
+      - name: fazer build
+        run: npm run build
