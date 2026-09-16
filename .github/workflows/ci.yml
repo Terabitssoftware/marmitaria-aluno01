@@ -41,3 +41,23 @@ jobs:
           context: .
           push: true
           tags: ${{ steps.image.outputs.name }}
+      
+      - name: Deploy na VPS
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+          ssh-keyscan -H "${{ secrets.VPS_HOST }}" >> ~/.ssh/known_hosts
+
+          ssh "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}" << 'EOF'
+            docker pull ghcr.io/terabitssoftware/marmitaria-aluno01:latest
+
+            docker stop marmitaria-aluno01-v2 || true
+            docker rm marmitaria-aluno01-v2 || true
+
+            docker run -d \
+              --name marmitaria-aluno01-v2 \
+              -p 3102:3000 \
+              ghcr.io/terabitssoftware/marmitaria-aluno01:latest
+          EOF
