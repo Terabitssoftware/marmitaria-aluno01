@@ -21,3 +21,6 @@ jobs:
       
       - name: fazer build
         run: npm run build
+      
+      - name: Build de imagem Docker
+        run: docker build -t marmitaria-api .
