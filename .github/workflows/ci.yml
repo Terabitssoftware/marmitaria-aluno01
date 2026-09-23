@@ -5,22 +5,36 @@ on:
     branches:
       - master
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
-  teste:
+  ci:
     runs-on: ubuntu-latest
 
     steps:
       - name: Baixar código
         uses: actions/checkout@v4
 
-      - name: Instalar dependencias
+      - name: Instalar dependências
         run: npm ci
 
       - name: Executar testes
         run: npm test
-      
-      - name: fazer build
+
+      - name: Fazer build
         run: npm run build
-      
-      - name: Build de imagem Docker
-        run: docker build -t marmitaria-api . 
+
+      - name: Login no GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build da imagem
+        run: docker build -t ghcr.io/${{ github.repository }}:latest .
+
+      - name: Publicar imagem no GHCR
+        run: docker push ghcr.io/${{ github.repository }}:latest
