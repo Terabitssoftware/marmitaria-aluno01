@@ -40,5 +40,5 @@ jobs:
 
 
       - name: Enviar imagem para GHCR
-        run: |
+        run: | 
           docker push ghcr.io/terabitssoftware/marmitaria:latest
