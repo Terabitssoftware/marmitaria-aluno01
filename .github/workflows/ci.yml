@@ -36,9 +36,9 @@ jobs:
       
       - name: Criar imagem Docker
         run: |
-          docker build -t ghcr.io/${{ github.repository_owner }}/marmitaria:latest .
+          docker build -t ghcr.io/terabitssoftware/marmitaria:latest .
 
 
       - name: Enviar imagem para GHCR
         run: |
-          docker push ghcr.io/${{ github.repository_owner }}/marmitaria:latest
+          docker push ghcr.io/terabitssoftware/marmitaria:latest
