@@ -34,7 +34,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build da imagem
-        run: docker build -t ghcr.io/${{ github.repository }}:latest .
+        run: docker build -t ghcr.io/terabitssoftware/marmitaria-aluno01:latest .
 
       - name: Publicar imagem no GHCR
-        run: docker push ghcr.io/${{ github.repository }}:latest
+        run: docker push ghcr.io/terabitssoftware/marmitaria-aluno01:latest
