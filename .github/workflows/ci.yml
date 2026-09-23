@@ -26,4 +26,19 @@ jobs:
       - name: Fazer build
         run: npm run build
 
-     
+     #Aqui começa o CD
+      - name: Login no GHCR
+        uses: docker/login-actions@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Criar imagem Docker
+        run: |
+          docker build -t ghcr.io/${{ github.repository_owner }}/marmitaria:latest .
+
+
+      - name: Enviar imagem para GHCR
+        run: |
+          docker push ghcr.io/${{ github.repository_owner }}/marmitaria:latest
