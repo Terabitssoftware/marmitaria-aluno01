@@ -42,3 +42,25 @@ jobs:
       - name: Enviar imagem para GHCR
         run: | 
           docker push ghcr.io/terabitssoftware/marmitaria:latest
+
+      
+      - name: Deploy na VPS
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          password: ${{ secrets.SSH_PASSWORD }}
+
+          script: |
+            docker pull ghcr.io/terabitssoftware/marmitaria-aluno01:latest
+
+            docker stop marmitaria || true
+
+            docker rm marmitaria || true
+
+            docker run -d \
+              --name marmitaria \
+              -p 3013:3000 \
+              ghcr.io/terabitssoftware/marmitaria-aluno01:latest
+      
