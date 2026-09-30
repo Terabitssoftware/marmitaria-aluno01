@@ -36,12 +36,12 @@ jobs:
       
       - name: Criar imagem Docker
         run: |
-          docker build -t ghcr.io/terabitssoftware/marmitaria-aluno01:latest .
+          docker build -t ghcr.io/terabitssoftware/marmitaria:latest .
 
 
       - name: Enviar imagem para GHCR
         run: | 
-          docker push ghcr.io/terabitssoftware/marmitaria-aluno01:latest
+          docker push ghcr.io/terabitssoftware/marmitaria:latest
 
       
       - name: Deploy na VPS
@@ -53,8 +53,14 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
 
           script: |
-            cd /home/gustavo/deploy/marmitaria-aluno01
+            docker pull ghcr.io/terabitssoftware/marmitaria-aluno01:latest
 
-            docker compose pull
+            docker stop marmitaria || true
 
-            docker compose up -d 
+            docker rm marmitaria || true
+
+            docker run -d \
+              --name marmitaria \
+              -p 3013:3000 \
+              ghcr.io/terabitssoftware/marmitaria-aluno01:latest
+      
