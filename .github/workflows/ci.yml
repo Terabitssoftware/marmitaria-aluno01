@@ -53,14 +53,8 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
 
           script: |
-            docker pull ghcr.io/terabitssoftware/marmitaria-aluno01:latest
+            cd /home/gustavo/deploy/marmitaria-aluno01
 
-            docker stop marmitaria || true
+            docker compose pull
 
-            docker rm marmitaria || true
-
-            docker run -d \
-              --name marmitaria \
-              -p 3013:3000 \
-              ghcr.io/terabitssoftware/marmitaria-aluno01:latest
-      
+            docker compose up -d

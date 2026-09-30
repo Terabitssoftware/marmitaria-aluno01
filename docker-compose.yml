@@ -1,0 +1,7 @@
+services:
+  marmitaria:
+    image: ghcr.io/terabitssoftware/marmitaria-aluno01:latest
+    container_name: marmitaria-aluno01
+    restart: always
+    ports:
+      - "3013:3000"
