@@ -3,4 +3,4 @@ export class CreateOrderDto{
     meal: string
     quantity: number
     price: number
-}
+} 
