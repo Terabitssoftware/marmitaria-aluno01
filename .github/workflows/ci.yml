@@ -1,3 +1,4 @@
+
 name: CI - Marmitaria
 
 on:
@@ -26,24 +27,23 @@ jobs:
       - name: Fazer build
         run: npm run build
 
-     #Aqui começa o CD
+      # Aqui começa o CD
+
       - name: Login no GHCR
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      
+
       - name: Criar imagem Docker
         run: |
-          docker build -t ghcr.io/terabitssoftware/marmitaria:latest .
-
+          docker build -t ghcr.io/terabitssoftware/marmitaria-aluno01:latest .
 
       - name: Enviar imagem para GHCR
-        run: | 
-          docker push ghcr.io/terabitssoftware/marmitaria:latest
+        run: |
+          docker push ghcr.io/terabitssoftware/marmitaria-aluno01:latest
 
-      
       - name: Deploy na VPS
         uses: appleboy/ssh-action@v1
         with:
@@ -63,4 +63,4 @@ jobs:
               --name marmitaria \
               -p 3013:3000 \
               ghcr.io/terabitssoftware/marmitaria-aluno01:latest
-      
+
