@@ -12,8 +12,7 @@ permissions:
 
 jobs:
   ci:
-    runs-on: [self-hosted, terabits]
-
+    runs-on: ubuntu-latest
     steps:
       - name: Baixar código
         uses: actions/checkout@v4
