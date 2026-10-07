@@ -60,6 +60,6 @@ jobs:
 
             docker run -d \
               --name marmitaria \
-              -p 3001:3000 \
+              -p 3331:3000 \
               ghcr.io/terabitssoftware/marmitaria-aluno01:latest
 
