@@ -1,4 +1,3 @@
-
 name: CI - Marmitaria
 
 on:
@@ -13,13 +12,23 @@ permissions:
 jobs:
   ci:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+
     steps:
       - name: Baixar código
         uses: actions/checkout@v4
 
+      - name: Cache npm
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: npm-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            npm-${{ runner.os }}-
+
       - name: Instalar dependências
         run: npm ci
-      
+
       - name: Auditoria de dependências
         run: npm audit --audit-level=high
 
@@ -68,4 +77,3 @@ jobs:
               --name marmitaria01 \
               -p 3331:3000 \
               ghcr.io/terabitssoftware/marmitaria-aluno01:${{ github.sha }}
-
